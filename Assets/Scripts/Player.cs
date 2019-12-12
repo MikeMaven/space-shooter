@@ -145,6 +145,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            StartCoroutine(DamageCooldown());
             _shieldsActive = false;
             _shieldsPrefab.SetActive(false);
         }
