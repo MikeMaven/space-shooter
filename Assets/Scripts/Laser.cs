@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class Laser : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 8.0f;
-    private bool _isEnemyLaser;
+    public bool _isEnemyLaser;
     // Start is called before the first frame update
     void Start()
     {
@@ -68,6 +70,11 @@ public class Laser : MonoBehaviour
             {
                 player.LoseALife();
             }
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(this.gameObject);
         }
     }
 }
