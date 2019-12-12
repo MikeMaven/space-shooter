@@ -331,6 +331,7 @@ MonoBehaviour:
   _rightEngineDamage: {fileID: 33689508}
   _laserClip: {fileID: 8300000, guid: 75676f361bdfeaf41a46623e95df3dbc, type: 3}
   _powerupClip: {fileID: 8300000, guid: 5ee343246919d2b4bba63ae629e95494, type: 3}
+  _laserHitClip: {fileID: 8300000, guid: 652231ab61c434d50a53ea569c9818c8, type: 3}
 --- !u!212 &137636582
 SpriteRenderer:
   m_ObjectHideFlags: 0
