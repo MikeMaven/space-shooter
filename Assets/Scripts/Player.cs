@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     private float _canFire = 0.0f;
     private bool _shieldsActive;
     private int _lives = 3;
+    private bool _invincible;
     private int _score;
     private SpawnManager _spawnManager;
     private bool _isTripleShotActive;
@@ -27,8 +28,9 @@ public class Player : MonoBehaviour
     private GameObject _leftEngineDamage, _rightEngineDamage;
     private UIManager _uiManager;
     [SerializeField]
-    private AudioClip _laserClip, _powerupClip;
+    private AudioClip _laserClip, _powerupClip, _laserHitClip;
     private AudioSource _audioSource;
+    private SpriteRenderer _spriteRenderer;
     
 
     // Start is called before the first frame update
@@ -53,6 +55,11 @@ public class Player : MonoBehaviour
         if (!_audioSource)
         {
             Debug.LogError("Laser sound audio source not assigned");
+        }
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        if (!_spriteRenderer)
+        {
+            Debug.LogError("Sprite renderer not assigned on player");
         }
     }
 
@@ -119,9 +126,12 @@ public class Player : MonoBehaviour
 
     public void LoseALife()
     {
-        if (!_shieldsActive)
+        if (!_shieldsActive && !_invincible)
         {
             _lives--;
+            _audioSource.PlayOneShot(_laserHitClip, 1.0f);
+            StartCoroutine(DamageCooldown());
+            StartCoroutine(Blink());
             if (_lives == 2)
             {
                 _leftEngineDamage.SetActive(true);
@@ -179,5 +189,23 @@ public class Player : MonoBehaviour
     {
         _score += points;
         _uiManager.UpdateScore(_score);
+    }
+
+    IEnumerator DamageCooldown()
+    {
+        _invincible = true;
+        yield return new WaitForSeconds(2.0f);
+        _invincible = false;
+    }
+
+    IEnumerator Blink()
+    {
+        while(_invincible)
+        {
+            _spriteRenderer.enabled = false;
+            yield return new WaitForSeconds(0.15f);
+            _spriteRenderer.enabled = true;
+            yield return new WaitForSeconds(0.15f);
+        }
     }
 }
