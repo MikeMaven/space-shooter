@@ -11,6 +11,9 @@ public class UIManager : MonoBehaviour
     private Text _scoreText;
     private int _score = 0;
     [SerializeField]
+    private Text _ammoText;
+    private int _ammo = 15;
+    [SerializeField]
     private Sprite[] _livesSprites;
     [SerializeField]
     private Image _livesImage;
@@ -33,12 +36,19 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         _scoreText.text = "Score: " + _score;
+        _ammoText.text = "Ammo: " + _ammo;
     }
 
     public void UpdateScore(int score)
     {
         _score = score;
     }
+
+    public void UpdateAmmo(int ammo)
+    {
+        _ammo = ammo;
+    }
+
     public void UpdateLives(int currentLives)
     {
         _livesImage.sprite = _livesSprites[currentLives];

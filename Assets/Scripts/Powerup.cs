@@ -46,8 +46,14 @@ public class Powerup : MonoBehaviour
                     case 2:
                         player.SetShieldsActive();
                         break;
+                    case 3:
+                        player.RefillAmmo(15);
+                        break;
+                    case 4:
+                        player.SpreadShotActive();
+                        break;
                     default:
-                        Debug.Log("Something went wrong");
+                        Debug.LogError("Something went wrong");
                         break;
                 }
             }
