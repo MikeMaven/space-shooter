@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
     // Player attributes
     [SerializeField]
     private float _speed = 5.0f;
+    private float _originalSpeed;
+    private float _newSpeed;
+    private bool _leftShift;
     private float _speedMultiplier = 2.0f;
     [SerializeField]
     private int _lives = 3;
@@ -22,7 +26,8 @@ public class Player : MonoBehaviour
     private int _score;
     private bool _isTripleShotActive;
     private bool _isSpreadShotActive;
-    private float _thrusters;
+    [SerializeField]
+    private float _thrusterFuel = 15.0f;
 
 
     // Component references
@@ -46,6 +51,7 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private SpriteRenderer _shieldsRenderer;
     private CameraShake _cameraShake;
+    private Slider _thrusterSlider;
     
 
     // Start is called before the first frame update
@@ -60,6 +66,15 @@ public class Player : MonoBehaviour
         {
             Debug.Log("UI Manager is null");
         }
+
+        _thrusterSlider = GameObject.Find("UICanvas").GetComponentInChildren<Slider>();
+
+        if(!_thrusterSlider)
+        {
+            Debug.LogError("Slider value not captured on player");
+        }
+
+        _thrusterSlider.value = _thrusterFuel;
 
         if (_spawnManager == null)
         {
@@ -99,6 +114,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         Movement();
+        Thrusters();
         RoomWrap();
         if (Input.GetKeyDown(KeyCode.Space) && Time.time > _canFire)
         {
@@ -108,20 +124,44 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            _speed = _speed * 1.3f;
-        }
-
-        if(Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            _speed = _speed / 1.3f;
-        }
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
+    }
+
+    void Thrusters()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift) && _thrusterFuel > 0)
+        {
+            _leftShift = !_leftShift;
+            _originalSpeed = _speed;
+            _newSpeed = _originalSpeed * 1.5f;
+        }
+
+        if(Input.GetKey(KeyCode.LeftShift))
+        {
+            _speed = _newSpeed;
+            if (_thrusterFuel > 0)
+            {
+                _thrusterFuel -= Time.deltaTime;
+                _thrusterSlider.value = _thrusterFuel;
+            }
+
+            if (_thrusterFuel <= 0)
+            {
+                _speed = _originalSpeed;
+            }
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            _leftShift = !_leftShift;
+            _thrusterFuel = Mathf.Floor(_thrusterFuel);
+            _speed = _originalSpeed;
+            StartCoroutine(ThrusterCooldownRoutine());
+        }
     }
 
     void RoomWrap() 
@@ -305,6 +345,16 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(0.15f);
             _spriteRenderer.enabled = true;
             yield return new WaitForSeconds(0.15f);
+        }
+    }
+
+    IEnumerator ThrusterCooldownRoutine()
+    {
+        while (_thrusterFuel <= 15 && !_leftShift)
+        {
+            _thrusterFuel += 0.25f;
+            _thrusterSlider.value = _thrusterFuel;
+            yield return new WaitForSeconds(0.25f);
         }
     }
 }
