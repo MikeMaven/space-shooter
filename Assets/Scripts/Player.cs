@@ -352,9 +352,9 @@ public class Player : MonoBehaviour
     {
         while (_thrusterFuel <= 15 && !_leftShift)
         {
-            _thrusterFuel += 0.25f;
+            _thrusterFuel += Time.deltaTime;
             _thrusterSlider.value = _thrusterFuel;
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(Time.deltaTime);
         }
     }
 }
