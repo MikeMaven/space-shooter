@@ -19,12 +19,6 @@ public class SpawnManager : MonoBehaviour
     private GameObject _spreadShot;
 
     public bool StopSpawning => _stopSpawning;
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     public void StartSpawning()
     {
