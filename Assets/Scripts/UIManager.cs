@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Text _ammoText;
     private int _ammo = 15;
+    private int _maxAmmo = 60;
     [SerializeField]
     private Sprite[] _livesSprites;
     [SerializeField]
@@ -36,7 +37,7 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         _scoreText.text = "Score: " + _score;
-        _ammoText.text = "Ammo: " + _ammo;
+        _ammoText.text = "Ammo: " + _ammo + "/" + _maxAmmo;
     }
 
     public void UpdateScore(int score)
@@ -60,6 +61,11 @@ public class UIManager : MonoBehaviour
         _gameManager.GameOver();
         _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickerRoutine());
+    }
+
+    public void SetMaxAmmo(int ammo)
+    {
+        _maxAmmo = ammo;
     }
 
     IEnumerator GameOverFlickerRoutine()

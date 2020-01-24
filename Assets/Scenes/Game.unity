@@ -323,6 +323,7 @@ MonoBehaviour:
   _fireRate: 0.15
   _shieldLife: 0
   _ammo: 15
+  _maxAmmo: 60
   _thrusterFuel: 15
   _laserPrefab: {fileID: 7084158866391635083, guid: 1a0185f42025642b2becb12dd32fa7d4,
     type: 3}
@@ -1699,7 +1700,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50, y: -69.6}
+  m_AnchoredPosition: {x: -55, y: -69.6}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1594054831
@@ -1776,7 +1777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50, y: -50}
+  m_AnchoredPosition: {x: -55, y: -50}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1648555462

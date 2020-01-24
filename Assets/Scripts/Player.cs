@@ -22,6 +22,8 @@ public class Player : MonoBehaviour
     private int _shieldLife;
     [SerializeField]
     private int _ammo = 15;
+    [SerializeField]
+    private int _maxAmmo = 60;
     private bool _invincible;
     private int _score;
     private bool _isTripleShotActive;
@@ -105,6 +107,7 @@ public class Player : MonoBehaviour
             Debug.LogError("Camera shake script not assigned");
         }
 
+        _uiManager.SetMaxAmmo(_maxAmmo);
         _cameraShake.enabled = false;
         _rightEngineDamage.SetActive(false);
         _leftEngineDamage.SetActive(false);
@@ -340,7 +343,14 @@ public class Player : MonoBehaviour
 
     public void RefillAmmo(int ammo)
     {
-        _ammo += ammo;
+        if (_ammo + ammo > _maxAmmo)
+        {
+            _ammo = _maxAmmo;
+        }
+        else
+        {
+            _ammo += ammo;
+        }
     }
 
     IEnumerator DamageCooldown()
