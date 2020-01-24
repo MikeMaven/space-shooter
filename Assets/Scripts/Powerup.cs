@@ -50,7 +50,11 @@ public class Powerup : MonoBehaviour
                         player.RefillAmmo(15);
                         break;
                     case 4:
+                        player.NegativePowerupActive();
+                        break;
+                    case 5:
                         player.SpreadShotActive();
+                        
                         break;
                     default:
                         Debug.LogError("Something went wrong");

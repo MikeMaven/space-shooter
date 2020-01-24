@@ -304,10 +304,23 @@ public class Player : MonoBehaviour
         _speed *= _speedMultiplier;
         StartCoroutine(SpeedBoostPowerDownRoutine());
     }
+
     IEnumerator SpeedBoostPowerDownRoutine ()
     {
         yield return new WaitForSeconds(5.0f);
         _speed /= _speedMultiplier; 
+    }
+
+    public void NegativePowerupActive()
+    {
+        _speed /= _speedMultiplier;
+        StartCoroutine(SpeedDownPowerDownRoutine());
+    }
+
+    IEnumerator SpeedDownPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5.0f);
+        _speed *= _speedMultiplier;
     }
 
     public void SetShieldsActive()

@@ -47,7 +47,7 @@ public class SpawnManager : MonoBehaviour
         while (!_stopSpawning)
         {
             Vector3 randomPosAboveScreen = new Vector3(Random.Range(-9.4f, 9.4f), 6.05f, 0);
-            int randomPowerup = Random.Range(0, 3);
+            int randomPowerup = Random.Range(0, 4);
             Instantiate(_powerups[randomPowerup], randomPosAboveScreen, Quaternion.identity);
             yield return new WaitForSeconds(Random.Range(8.0f, 12.0f));
         }

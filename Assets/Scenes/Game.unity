@@ -1596,6 +1596,7 @@ MonoBehaviour:
   - {fileID: 1520187163711067883, guid: 9b093e87887b5450fbe6d5854afab5aa, type: 3}
   - {fileID: 3223566782030690128, guid: 7791ead8bca2843f9b424cb7250358a2, type: 3}
   - {fileID: 3721737781474714833, guid: 3a4a05431699c47d4a9f5bb49cd83055, type: 3}
+  - {fileID: 554254177474646150, guid: 1fa508d48f94b45e7bf008bda85d6524, type: 3}
   _ammoRefill: {fileID: 5221521956546788110, guid: 0feed66fb8c974411881dd1faebc1841,
     type: 3}
   _spreadShot: {fileID: 3380516451640437858, guid: bac73da6637c3419b9388379af704d80,
