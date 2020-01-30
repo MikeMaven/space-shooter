@@ -30,7 +30,9 @@ public class Player : MonoBehaviour
     private bool _isSpreadShotActive;
     [SerializeField]
     private float _thrusterFuel = 15.0f;
-
+    private WaitForSeconds _thrusterYield;
+    private WaitForSeconds _blinkYield;
+    private WaitForSeconds _powerupYield;
 
     // Component references
     [SerializeField]
@@ -111,6 +113,9 @@ public class Player : MonoBehaviour
         _cameraShake.enabled = false;
         _rightEngineDamage.SetActive(false);
         _leftEngineDamage.SetActive(false);
+        _thrusterYield = new WaitForSeconds(Time.deltaTime);
+        _blinkYield = new WaitForSeconds(0.15f);
+        _powerupYield = new WaitForSeconds(5.0f);
     }
 
     // Update is called once per frame
@@ -298,7 +303,7 @@ public class Player : MonoBehaviour
 
     IEnumerator SpreadShotPowerDownRoutine()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return _powerupYield;
         _isSpreadShotActive = false;
     }
 
@@ -310,7 +315,7 @@ public class Player : MonoBehaviour
 
     IEnumerator SpeedBoostPowerDownRoutine ()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return _powerupYield;
         _speed /= _speedMultiplier; 
     }
 
@@ -322,7 +327,7 @@ public class Player : MonoBehaviour
 
     IEnumerator SpeedDownPowerDownRoutine()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return _powerupYield;
         _speed *= _speedMultiplier;
     }
 
@@ -365,9 +370,9 @@ public class Player : MonoBehaviour
         while(_invincible)
         {
             _spriteRenderer.enabled = false;
-            yield return new WaitForSeconds(0.15f);
+            yield return _blinkYield;
             _spriteRenderer.enabled = true;
-            yield return new WaitForSeconds(0.15f);
+            yield return _blinkYield;
         }
     }
 
@@ -377,7 +382,7 @@ public class Player : MonoBehaviour
         {
             _thrusterFuel += Time.deltaTime;
             _thrusterSlider.value = _thrusterFuel;
-            yield return new WaitForSeconds(Time.deltaTime);
+            yield return _thrusterYield;
         }
     }
 }
