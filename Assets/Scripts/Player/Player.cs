@@ -34,6 +34,9 @@ public class Player : MonoBehaviour
     private WaitForSeconds _blinkYield;
     private WaitForSeconds _powerupYield;
 
+    //Script references
+    private PlayerControls _playerControls;
+
     // Component references
     [SerializeField]
     private GameObject _laserPrefab;
@@ -56,14 +59,16 @@ public class Player : MonoBehaviour
     private SpriteRenderer _shieldsRenderer;
     private CameraShake _cameraShake;
     private Slider _thrusterSlider;
-    
 
-    // Start is called before the first frame update
+
+    void Awake()
+    {
+        transform.position = new Vector3(0, 0, 0);
+        _shieldsPrefab.SetActive(false);
+    }
     void Start()
     {
-        transform.position = new Vector3 (0, 0, 0);
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
-        _shieldsPrefab.SetActive(false);
 
         _uiManager = GameObject.Find("UICanvas").GetComponent<UIManager>();
         if(!_uiManager)
@@ -109,6 +114,12 @@ public class Player : MonoBehaviour
             Debug.LogError("Camera shake script not assigned");
         }
 
+        _playerControls = GetComponent<PlayerControls>();
+        if (!_playerControls)
+        {
+            Debug.LogError("Player controls script not assigned");
+        }
+
         _uiManager.SetMaxAmmo(_maxAmmo);
         _cameraShake.enabled = false;
         _rightEngineDamage.SetActive(false);
@@ -118,7 +129,6 @@ public class Player : MonoBehaviour
         _powerupYield = new WaitForSeconds(5.0f);
     }
 
-    // Update is called once per frame
     void Update()
     {
         Movement();
@@ -132,10 +142,7 @@ public class Player : MonoBehaviour
 
     void Movement()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
-
-        Vector3 direction = new Vector3(horizontalInput, verticalInput, 0);
+        Vector3 direction = new Vector3(_playerControls.horizontalInput, _playerControls.verticalInput, 0);
         transform.Translate(direction * _speed * Time.deltaTime);
     }
 
@@ -166,7 +173,6 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             _leftShift = !_leftShift;
-            _thrusterFuel = Mathf.Floor(_thrusterFuel);
             _speed = _originalSpeed;
             StartCoroutine(ThrusterCooldownRoutine());
         }
