@@ -30,12 +30,15 @@ public class Player : MonoBehaviour
     private bool _isSpreadShotActive;
     [SerializeField]
     private float _thrusterFuel = 15.0f;
+
+    //Cached yields
     private WaitForSeconds _thrusterYield;
     private WaitForSeconds _blinkYield;
     private WaitForSeconds _powerupYield;
 
     //Script references
     private PlayerControls _playerControls;
+    private CameraShake _cameraShake;
 
     // Component references
     [SerializeField]
@@ -57,7 +60,6 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private SpriteRenderer _spriteRenderer;
     private SpriteRenderer _shieldsRenderer;
-    private CameraShake _cameraShake;
     private Slider _thrusterSlider;
 
 
