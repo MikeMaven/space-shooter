@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 4.0f;
+    public float speed = 4.0f;
     private Player _player;
     private Animator _anim;
     private AudioSource _audioSource;
@@ -13,6 +12,13 @@ public class Enemy : MonoBehaviour
     private GameObject _laserPrefab;
     private float _fireRate = 3.0f;
     private float _canFire = -1;
+    public enum EnemyType
+    {
+        Easy,
+        Medium,
+        Hard
+    }
+    public EnemyType enemyType;
 
     // Start is called before the first frame update
     void Start()
@@ -54,9 +60,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void Movement()
+    public virtual void Movement()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.down * speed * Time.deltaTime);
     }
 
     void RecycleMissed()
@@ -75,7 +81,7 @@ public class Enemy : MonoBehaviour
                 player.LoseALife();
             }
             _anim.SetTrigger("OnEnemyDeath");
-            _speed = 1;
+            speed = 1;
             GetComponent<BoxCollider2D>().enabled = false;
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
@@ -88,7 +94,7 @@ public class Enemy : MonoBehaviour
                 _player.AddToScore(10);
             }
             _anim.SetTrigger("OnEnemyDeath");
-            _speed = 1;
+            speed = 1;
             GetComponent<BoxCollider2D>().enabled = false;
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
