@@ -5,9 +5,9 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 4.0f;
-    private Player _player;
-    private Animator _anim;
-    private AudioSource _audioSource;
+    public Player _player;
+    public Animator _anim;
+    public AudioSource _audioSource;
     [SerializeField]
     private GameObject _laserPrefab;
     private float _fireRate = 3.0f;
@@ -88,12 +88,12 @@ public class Enemy : MonoBehaviour
         }
         if(other.tag == "Laser" && !other.gameObject.GetComponent<Laser>()._isEnemyLaser)
         {
+            _anim.SetTrigger("OnEnemyDeath");
             Destroy(other.gameObject);
             if(_player)
             {
                 _player.AddToScore(10);
             }
-            _anim.SetTrigger("OnEnemyDeath");
             speed = 1;
             GetComponent<BoxCollider2D>().enabled = false;
             _audioSource.Play();
