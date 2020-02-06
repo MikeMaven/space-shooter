@@ -6,19 +6,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Laser : MonoBehaviour
 {
-    [SerializeField]
-    private float _speed = 8.0f;
-    public bool _isEnemyLaser;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float speed = 8.0f;
+    public bool isEnemyLaser;
 
-    // Update is called once per frame
     void Update()
     {
-        if (!_isEnemyLaser)
+        if (!isEnemyLaser)
         {
             MoveUp();
         }
@@ -30,7 +23,7 @@ public class Laser : MonoBehaviour
 
     void MoveUp()
     {
-        transform.Translate(Vector3.up * _speed * Time.deltaTime);
+        transform.Translate(Vector3.up * speed * Time.deltaTime);
 
         if (transform.position.y > 8.0f)
         {
@@ -42,9 +35,9 @@ public class Laser : MonoBehaviour
         }
     }
 
-    void MoveDown()
+    public virtual void MoveDown()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        transform.Translate(Vector3.down * speed * Time.deltaTime);
 
         if (transform.position.y < -8.0f)
         {
@@ -58,12 +51,12 @@ public class Laser : MonoBehaviour
 
     public void AssignEnemyLaser()
     {
-        _isEnemyLaser = true;
+        isEnemyLaser = true;
     }
 
     void  OnTriggerEnter2D(Collider2D other)    
     {
-        if (other.tag == "Player" && _isEnemyLaser)
+        if (other.tag == "Player" && isEnemyLaser)
         {
             Player player = other.GetComponent<Player>();
             if (player)

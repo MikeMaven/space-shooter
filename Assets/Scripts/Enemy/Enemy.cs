@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     public EnemyType enemyType;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         if (!_player)
@@ -86,7 +86,7 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
         }
-        if(other.tag == "Laser" && !other.gameObject.GetComponent<Laser>()._isEnemyLaser)
+        if(other.tag == "Laser" && !other.gameObject.GetComponent<Laser>().isEnemyLaser)
         {
             _anim.SetTrigger("OnEnemyDeath");
             Destroy(other.gameObject);
