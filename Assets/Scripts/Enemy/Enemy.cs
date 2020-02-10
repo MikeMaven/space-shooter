@@ -8,10 +8,14 @@ public class Enemy : MonoBehaviour
     public Player _player;
     public Animator _anim;
     public AudioSource _audioSource;
+    public GameObject _laserPrefab;
     [SerializeField]
-    private GameObject _laserPrefab;
-    private float _fireRate = 3.0f;
+    private float _fireRateMin = 3.0f;
+    [SerializeField]
+    private float _fireRateMax = 7.0f;
+    private float _fireRate;
     private float _canFire = -1;
+    private bool _hasShield;
     public enum EnemyType
     {
         Easy,
@@ -20,7 +24,6 @@ public class Enemy : MonoBehaviour
     }
     public EnemyType enemyType;
 
-    // Start is called before the first frame update
     public void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
@@ -42,14 +45,13 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Update()
     {
         Movement();
         RecycleMissed();
         if(Time.time > _canFire)
         {
-            _fireRate = Random.Range(3f, 7f);
+            _fireRate = Random.Range(_fireRateMin, _fireRateMax);
             _canFire = Time.time + _fireRate;
             GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
             Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
@@ -72,9 +74,9 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other) 
+    protected virtual void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.tag == "Player") 
+        if (other.tag == "Player" && !_hasShield)
         {
             Player player = other.transform.GetComponent<Player>();
             if(player != null) {
@@ -86,7 +88,7 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
         }
-        if(other.tag == "Laser" && !other.gameObject.GetComponent<Laser>().isEnemyLaser)
+        if (other.tag == "Laser" && !_hasShield && !other.gameObject.GetComponent<Laser>().isEnemyLaser)
         {
             _anim.SetTrigger("OnEnemyDeath");
             Destroy(other.gameObject);
@@ -99,5 +101,10 @@ public class Enemy : MonoBehaviour
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
         }
+    }
+
+    public void SetShield(bool setting)
+    {
+        _hasShield = setting;
     }
 }

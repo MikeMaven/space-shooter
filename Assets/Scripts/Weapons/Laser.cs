@@ -8,10 +8,11 @@ public class Laser : MonoBehaviour
 {
     public float speed = 8.0f;
     public bool isEnemyLaser;
+    public bool isReverseLaser;
 
     void Update()
     {
-        if (!isEnemyLaser)
+        if (!isEnemyLaser || isReverseLaser)
         {
             MoveUp();
         }
@@ -52,6 +53,11 @@ public class Laser : MonoBehaviour
     public void AssignEnemyLaser()
     {
         isEnemyLaser = true;
+    }
+
+    public void AssignReverseLaser()
+    {
+        isReverseLaser = true;
     }
 
     void  OnTriggerEnter2D(Collider2D other)    

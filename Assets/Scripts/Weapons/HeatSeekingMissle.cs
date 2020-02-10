@@ -6,7 +6,7 @@ public class HeatSeekingMissle : Laser
     private GameObject _playerRef;
     private Vector3 _direction;
     [SerializeField]
-    private float _relativeSeekSpeed = 0.5f;
+    private float _relativeSeekSpeed = 0.3f;
 
     void Start()
     {

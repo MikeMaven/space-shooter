@@ -11,6 +11,7 @@ public class AltMovementEnemy : Enemy
     new void Start()
     {
         base.Start();
+        StartCoroutine(MovementCoroutine());
     }
 
     public override void Movement()
