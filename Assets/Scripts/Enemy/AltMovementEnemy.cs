@@ -11,6 +11,7 @@ public class AltMovementEnemy : Enemy
     new void Start()
     {
         base.Start();
+        _movementYield = new WaitForSeconds(2.0f);
         StartCoroutine(MovementCoroutine());
     }
 

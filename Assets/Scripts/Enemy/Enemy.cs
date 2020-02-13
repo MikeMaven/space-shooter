@@ -5,6 +5,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public float speed = 4.0f;
+    public SpawnManager spawnManager;
     public Player _player;
     public Animator _anim;
     public AudioSource _audioSource;
@@ -42,6 +43,12 @@ public class Enemy : MonoBehaviour
         if (!_audioSource)
         {
             Debug.LogError("The enemy audio source is not assigned");
+        }
+
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (!spawnManager)
+        {
+            Debug.LogError("Spawn Manager note assigned in Enemy script");
         }
     }
 
@@ -87,6 +94,7 @@ public class Enemy : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
+            spawnManager.OnEnemyDeath();
         }
         if (other.tag == "Laser" && !_hasShield && !other.gameObject.GetComponent<Laser>().isEnemyLaser)
         {
@@ -100,6 +108,7 @@ public class Enemy : MonoBehaviour
             GetComponent<BoxCollider2D>().enabled = false;
             _audioSource.Play();
             Destroy(this.gameObject, 2.4f);
+            spawnManager.OnEnemyDeath();
         }
     }
 

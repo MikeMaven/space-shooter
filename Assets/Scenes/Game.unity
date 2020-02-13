@@ -184,7 +184,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &33689508
 GameObject:
@@ -307,6 +307,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6023349321048013259, guid: 5729f66209cf740a7a5ad67d7f0ffd93,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6068423069820435250, guid: 5729f66209cf740a7a5ad67d7f0ffd93,
         type: 3}
@@ -1025,7 +1030,7 @@ PrefabInstance:
     - target: {fileID: 5940581467704842424, guid: 5765c2f9e51b24efd9bd673863a75526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 8
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5940581467704842424, guid: 5765c2f9e51b24efd9bd673863a75526,
         type: 3}
@@ -1050,7 +1055,7 @@ PrefabInstance:
     - target: {fileID: 6080722300749241627, guid: 5765c2f9e51b24efd9bd673863a75526,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5765c2f9e51b24efd9bd673863a75526, type: 3}
@@ -1716,8 +1721,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68137813746844d80bf0437faf5b175e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyPrefab: {fileID: 7828471790812685565, guid: 3ae14fb4a48674af9b917d1e5b736631,
-    type: 3}
+  _wave: 1
+  _numberOfEnemiesInWave: 10
+  waveDifficulty: 0
+  _allEnemyPrefabs:
+  - {fileID: 7828471790812685565, guid: 3ae14fb4a48674af9b917d1e5b736631, type: 3}
+  - {fileID: 7021974633587866370, guid: 29be3d89b6a114e4d9f2a563ae7191aa, type: 3}
+  - {fileID: 1010452111050040797, guid: ba22e5d1891e341fd961f7328c263a61, type: 3}
+  - {fileID: 530218456158352679, guid: 9ec4f088ed9a74143989746680456ea3, type: 3}
+  - {fileID: 8080735965129206517, guid: 4c31fcfa932d34becb9711a53ebc875f, type: 3}
   _enemyContainer: {fileID: 582772938}
   _spawnFrequency: 2
   _powerups:
