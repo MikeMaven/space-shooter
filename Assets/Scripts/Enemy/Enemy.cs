@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public float speed = 4.0f;
+    protected float speed = 4.0f;
     public SpawnManager spawnManager;
     public Player _player;
     public Animator _anim;

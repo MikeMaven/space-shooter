@@ -6,9 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class Laser : MonoBehaviour
 {
-    public float speed = 8.0f;
-    public bool isEnemyLaser;
-    public bool isReverseLaser;
+    protected float speed = 8.0f;
+    protected bool isEnemyLaser;
+    protected bool isReverseLaser;
 
     void Update()
     {
