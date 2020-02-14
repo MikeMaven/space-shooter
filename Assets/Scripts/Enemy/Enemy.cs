@@ -58,20 +58,30 @@ public class Enemy : MonoBehaviour
         RecycleMissed();
         if(Time.time > _canFire)
         {
-            _fireRate = Random.Range(_fireRateMin, _fireRateMax);
-            _canFire = Time.time + _fireRate;
-            GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
-            Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
-            for (int i = 0; i < lasers.Length; i++)
-            {
-                lasers[i].AssignEnemyLaser();
-            }
+            Shoot();
+        }
+
+        if(Physics2D.Raycast(transform.position, transform.TransformDirection(Vector3.down), 2, 1 << 10))
+        {
+            Shoot();    
         }
     }
 
     public virtual void Movement()
     {
         transform.Translate(Vector3.down * speed * Time.deltaTime);
+    }
+
+    private void Shoot()
+    {
+        _fireRate = Random.Range(_fireRateMin, _fireRateMax);
+        _canFire = Time.time + _fireRate;
+        GameObject enemyLaser = Instantiate(_laserPrefab, transform.position, Quaternion.identity);
+        Laser[] lasers = enemyLaser.GetComponentsInChildren<Laser>();
+        for (int i = 0; i < lasers.Length; i++)
+        {
+            lasers[i].AssignEnemyLaser();
+        }
     }
 
     void RecycleMissed()

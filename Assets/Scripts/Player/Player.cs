@@ -26,8 +26,6 @@ public class Player : MonoBehaviour
     private int _maxAmmo = 60;
     private bool _invincible;
     private int _score;
-    private bool _isTripleShotActive;
-    private bool _isSpreadShotActive;
     [SerializeField]
     private float _thrusterFuel = 15.0f;
 
@@ -41,12 +39,15 @@ public class Player : MonoBehaviour
     private CameraShake _cameraShake;
 
     // Component references
+    private GameObject _selectedWeaponPrefab;
     [SerializeField]
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _tripleShotPrefab;
     [SerializeField]
     private GameObject _spreadShotPrefab;
+    [SerializeField]
+    private GameObject _homingMisslePrefab;
     [SerializeField]
     private GameObject _explosionPrefab;
     private SpawnManager _spawnManager; 
@@ -71,6 +72,10 @@ public class Player : MonoBehaviour
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Spawn Manager is null!");
+        }
 
         _uiManager = GameObject.Find("UICanvas").GetComponent<UIManager>();
         if(!_uiManager)
@@ -86,11 +91,6 @@ public class Player : MonoBehaviour
         }
 
         _thrusterSlider.value = _thrusterFuel;
-
-        if (_spawnManager == null)
-        {
-            Debug.LogError("Spawn Manager is null!");
-        }
 
         _audioSource  = transform.GetComponent<AudioSource>();
         if (!_audioSource)
@@ -129,6 +129,7 @@ public class Player : MonoBehaviour
         _thrusterYield = new WaitForSeconds(Time.deltaTime);
         _blinkYield = new WaitForSeconds(0.15f);
         _powerupYield = new WaitForSeconds(5.0f);
+        _selectedWeaponPrefab = _laserPrefab;
     }
 
     void Update()
@@ -210,23 +211,8 @@ public class Player : MonoBehaviour
             _ammo--;
             _uiManager.UpdateAmmo(_ammo);
             _audioSource.PlayOneShot(_laserClip, 1.0f);
-        }
-
-        if(!_isTripleShotActive && _ammo > 0)
-        {
-            if (_isSpreadShotActive)
-            {
-                Instantiate(_spreadShotPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
-            }
-            else
-            {
-                float yPosition = transform.position.y + 1.5f;
-                Instantiate(_laserPrefab, new Vector3(transform.position.x, yPosition, 0), Quaternion.identity);
-            }
-        }
-        else if (_isTripleShotActive && _ammo > 0)
-        {
-            Instantiate(_tripleShotPrefab, new Vector3(transform.position.x, transform.position.y, 0), Quaternion.identity);
+            float yPosition = transform.position.y + 1.5f;
+            Instantiate(_selectedWeaponPrefab, new Vector3(transform.position.x, yPosition, 0), Quaternion.identity);
         }
     }
 
@@ -291,28 +277,37 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void TripleShotActive()
+    public void HealPlayer()
     {
-        _isTripleShotActive = true;
-        StartCoroutine(TripleShotPowerDownRoutine());
+        if (_lives <= 3)
+        {
+            _lives++;
+            _uiManager.UpdateLives(_lives);
+        }
     }
 
-    IEnumerator TripleShotPowerDownRoutine()
+    public void TripleShotActive()
     {
-        yield return new WaitForSeconds(10.0f);
-        _isTripleShotActive = false;
+        _selectedWeaponPrefab = _tripleShotPrefab;
+        StartCoroutine(AltWeaponPowerDownRoutine(5.0f));
+    }
+
+    public void HomingMissleActive()
+    {
+        _selectedWeaponPrefab = _homingMisslePrefab;
+        StartCoroutine(AltWeaponPowerDownRoutine(5.0f));
     }
 
     public void SpreadShotActive()
     {
-        _isSpreadShotActive = true;
-        StartCoroutine(SpreadShotPowerDownRoutine());
+        _selectedWeaponPrefab = _spreadShotPrefab;
+        StartCoroutine(AltWeaponPowerDownRoutine(10.0f));
     }
 
-    IEnumerator SpreadShotPowerDownRoutine()
+    IEnumerator AltWeaponPowerDownRoutine(float time)
     {
-        yield return _powerupYield;
-        _isSpreadShotActive = false;
+        yield return new WaitForSeconds(time);
+        _selectedWeaponPrefab = _laserPrefab;
     }
 
     public void SpeedBoostActive()

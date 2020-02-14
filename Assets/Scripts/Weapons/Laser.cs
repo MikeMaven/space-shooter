@@ -22,7 +22,7 @@ public class Laser : MonoBehaviour
         }
     }
 
-    void MoveUp()
+    public virtual void MoveUp()
     {
         transform.Translate(Vector3.up * speed * Time.deltaTime);
 
@@ -68,6 +68,20 @@ public class Laser : MonoBehaviour
             if (player)
             {
                 player.LoseALife();
+            }
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            Destroy(this.gameObject);
+        }
+
+        if (other.tag == "Powerup" && isEnemyLaser)
+        {
+            Powerup powerup = other.GetComponent<Powerup>();
+            if(powerup)
+            {
+                powerup.Explode();
             }
             if (transform.parent != null)
             {

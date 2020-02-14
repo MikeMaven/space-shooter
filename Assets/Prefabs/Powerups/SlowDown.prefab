@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7811349624352781339}
   - component: {fileID: 6901704116703486672}
   - component: {fileID: 1958584162186787833}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SlowDown
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 554254177474646150}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -97,6 +97,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _powerupId: 4
+  _explosionPrefab: {fileID: 4010197235800569428, guid: d9837880bb690457c98fd3a64224f159,
+    type: 3}
 --- !u!58 &6901704116703486672
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -110,9 +112,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00000011920929, y: 0.026197612}
+  m_Offset: {x: 0.019289086, y: 0.026197605}
   serializedVersion: 2
-  m_Radius: 0.6213647
+  m_Radius: 0.7563874
 --- !u!50 &1958584162186787833
 Rigidbody2D:
   serializedVersion: 4

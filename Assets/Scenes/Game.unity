@@ -446,6 +446,8 @@ MonoBehaviour:
     type: 3}
   _spreadShotPrefab: {fileID: 7912430598212752693, guid: 34541664b0fab4830acdca4280e9f3f0,
     type: 3}
+  _homingMisslePrefab: {fileID: 5717309572935353438, guid: 9bfc837c04a874b1bb99163a10026521,
+    type: 3}
   _explosionPrefab: {fileID: 4010197235800569428, guid: d9837880bb690457c98fd3a64224f159,
     type: 3}
   _shieldsPrefab: {fileID: 8746294667052650346}
@@ -519,7 +521,7 @@ Transform:
   - {fileID: 33689509}
   - {fileID: 1681957347}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &137636584
 BoxCollider2D:
@@ -1030,7 +1032,7 @@ PrefabInstance:
     - target: {fileID: 5940581467704842424, guid: 5765c2f9e51b24efd9bd673863a75526,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5940581467704842424, guid: 5765c2f9e51b24efd9bd673863a75526,
         type: 3}
@@ -1316,7 +1318,7 @@ RectTransform:
   - {fileID: 263020911}
   - {fileID: 1185599909}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -1691,6 +1693,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1219527468}
   m_CullTransparentMesh: 0
+--- !u!1 &1444156555 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6023349321048013259, guid: 5729f66209cf740a7a5ad67d7f0ffd93,
+    type: 3}
+  m_PrefabInstance: {fileID: 40187623}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1577155765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1722,6 +1730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _wave: 1
+  _waveMultipler: 1.5
   _numberOfEnemiesInWave: 10
   waveDifficulty: 0
   _allEnemyPrefabs:
@@ -1730,6 +1739,7 @@ MonoBehaviour:
   - {fileID: 1010452111050040797, guid: ba22e5d1891e341fd961f7328c263a61, type: 3}
   - {fileID: 530218456158352679, guid: 9ec4f088ed9a74143989746680456ea3, type: 3}
   - {fileID: 8080735965129206517, guid: 4c31fcfa932d34becb9711a53ebc875f, type: 3}
+  - {fileID: 6060566422315547544, guid: 96f4e8c9cecee450fbebe23d81b1c0c5, type: 3}
   _enemyContainer: {fileID: 582772938}
   _spawnFrequency: 2
   _powerups:
@@ -1737,10 +1747,15 @@ MonoBehaviour:
   - {fileID: 3223566782030690128, guid: 7791ead8bca2843f9b424cb7250358a2, type: 3}
   - {fileID: 3721737781474714833, guid: 3a4a05431699c47d4a9f5bb49cd83055, type: 3}
   - {fileID: 554254177474646150, guid: 1fa508d48f94b45e7bf008bda85d6524, type: 3}
+  - {fileID: 3931960798908388132, guid: 8c87afba3a09145d3baa5cc40205a8ef, type: 3}
+  _rarePowerups:
+  - {fileID: 4240138064822851277, guid: 7718d5bfa102048faa5753614c1a9b0c, type: 3}
+  - {fileID: 3380516451640437858, guid: bac73da6637c3419b9388379af704d80, type: 3}
   _ammoRefill: {fileID: 5221521956546788110, guid: 0feed66fb8c974411881dd1faebc1841,
     type: 3}
   _spreadShot: {fileID: 3380516451640437858, guid: bac73da6637c3419b9388379af704d80,
     type: 3}
+  _boss: {fileID: 1444156555}
 --- !u!4 &1577155767
 Transform:
   m_ObjectHideFlags: 0

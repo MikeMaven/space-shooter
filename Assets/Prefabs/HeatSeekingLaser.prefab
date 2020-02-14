@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5423947460337724938}
   m_Layer: 0
   m_Name: HeatSeekingLaser
-  m_TagString: Untagged
+  m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,4 +144,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   isEnemyLaser: 0
+  isReverseLaser: 0
   _relativeSeekSpeed: 0.3

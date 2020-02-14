@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
     private int _numberOfWaves = 10;
+    [SerializeField]
     private int _wave = 1;
     [SerializeField]
     private float _waveMultipler = 1.5f;
@@ -30,9 +31,13 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _powerups;
     [SerializeField]
+    private GameObject[] _rarePowerups;
+    [SerializeField]
     private GameObject _ammoRefill;
     [SerializeField]
     private GameObject _spreadShot;
+    [SerializeField]
+    private GameObject _boss;
 
     public bool StopSpawning => _stopSpawning;
 
@@ -41,7 +46,7 @@ public class SpawnManager : MonoBehaviour
         StartCoroutine(SpawnEnemyRoutine());
         StartCoroutine(SpawnPowerupRoutine());
         StartCoroutine(SpawnAmmoRoutine());
-        StartCoroutine(SpawnSpreadShotRoutine());
+        StartCoroutine(SpawnRarePowerupsRoutine());
     }
 
     IEnumerator SpawnEnemyRoutine()
@@ -61,7 +66,14 @@ public class SpawnManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnFrequency);
         }
         yield return new WaitUntil(() => _enemiesToKillInWave <= 0);
-        StartCoroutine(WaveCooldown());
+        if (_wave < _numberOfWaves)
+        {
+            StartCoroutine(WaveCooldown());
+        }
+        else
+        {
+            _boss.SetActive(true);
+        }
     }
 
     IEnumerator WaveCooldown()
@@ -80,9 +92,9 @@ public class SpawnManager : MonoBehaviour
         while (!_stopSpawning)
         {
             Vector3 randomPosAboveScreen = new Vector3(Random.Range(-9.4f, 9.4f), 6.05f, 0);
-            int randomPowerup = Random.Range(0, 4);
+            int randomPowerup = Random.Range(0, _powerups.Length);
             Instantiate(_powerups[randomPowerup], randomPosAboveScreen, Quaternion.identity);
-            yield return new WaitForSeconds(Random.Range(8.0f, 12.0f));
+            yield return new WaitForSeconds(Random.Range(5.0f, 10.0f));
         }
     }
 
@@ -97,13 +109,14 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnSpreadShotRoutine()
+    IEnumerator SpawnRarePowerupsRoutine()
     {
         yield return new WaitForSeconds(30.0f);
         while (!_stopSpawning)
         {
             Vector3 randomPosAboveScreen = new Vector3(Random.Range(-9.4f, 9.4f), 6.05f, 0);
-            Instantiate(_spreadShot, randomPosAboveScreen, Quaternion.identity);
+            int randomPowerup = Random.Range(0, _rarePowerups.Length);
+            Instantiate(_rarePowerups[randomPowerup], randomPosAboveScreen, Quaternion.identity);
             yield return new WaitForSeconds(30.0f);
         }
     }

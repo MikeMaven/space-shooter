@@ -28,11 +28,25 @@ public class SmartDetection : MonoBehaviour
                 _smartEnemyParent.UpdateDirection(-0.6f);
             }
         }
+
+        if (other.tag == "Player")
+        {
+            if (other.transform.position.x < _smartEnemyParent.transform.position.x)
+            {
+                _smartEnemyParent.UpdateDirection(-0.8f);
+            }
+            else
+            {
+                _smartEnemyParent.UpdateDirection(0.8f);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Laser" && !other.gameObject.GetComponent<Laser>().isEnemyLaser)
+            _smartEnemyParent.UpdateDirection(0.0f);
+        if (other.tag == "Player")
             _smartEnemyParent.UpdateDirection(0.0f);
     }
 }

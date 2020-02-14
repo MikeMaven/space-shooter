@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2471597635249301535}
   - component: {fileID: 3306733559235935181}
   - component: {fileID: 1604243847024802460}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SpeedPowerup
-  m_TagString: Untagged
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -135,6 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 3
   _powerupId: 1
+  _explosionPrefab: {fileID: 4010197235800569428, guid: d9837880bb690457c98fd3a64224f159,
+    type: 3}
 --- !u!95 &1604243847024802460
 Animator:
   serializedVersion: 3

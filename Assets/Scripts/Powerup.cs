@@ -8,17 +8,25 @@ public class Powerup : MonoBehaviour
     private float _speed = 3.0f;
     [SerializeField]
     private int _powerupId;
+    private GameObject _player;
+    [SerializeField]
+    private GameObject _explosionPrefab;
 
-    // Start is called before the first frame update
     void Start()
     {
-        
+        _player = GameObject.Find("Player");
     }
 
-    // Update is called once per frame
     void Update()
     {
-        transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        if (Input.GetKey(KeyCode.C))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _player.transform.position, _speed * Time.deltaTime);
+        }
+        else
+        {
+            transform.Translate(Vector3.down * _speed * Time.deltaTime);
+        }
         
         if (transform.position.y <= -7.0f)
         {
@@ -54,7 +62,12 @@ public class Powerup : MonoBehaviour
                         break;
                     case 5:
                         player.SpreadShotActive();
-                        
+                        break;
+                    case 6:
+                        player.HomingMissleActive();
+                        break;
+                    case 7:
+                        player.HealPlayer();
                         break;
                     default:
                         Debug.LogError("Something went wrong");
@@ -63,5 +76,11 @@ public class Powerup : MonoBehaviour
             }
             Destroy(this.gameObject);
         }
+    }
+
+    public void Explode()
+    {
+        Destroy(this.gameObject, 0.2f);
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
     }
 }
