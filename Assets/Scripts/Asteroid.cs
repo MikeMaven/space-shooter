@@ -9,21 +9,16 @@ public class Asteroid : MonoBehaviour
     private GameObject _explosionPrefab;
     private SpawnManager _spawnManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         transform.Rotate(Vector3.forward * _rotationSpeed * Time.deltaTime);
     }
 
-    // check for laser collision
-    // instantiate explosion at position of asteroid
-    // destroy the explosion after 3 seconds
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Laser")
