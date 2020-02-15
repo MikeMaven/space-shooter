@@ -7,7 +7,7 @@ using UnityEngine;
 public class Laser : MonoBehaviour
 {
     protected float speed = 8.0f;
-    protected bool isEnemyLaser;
+    public bool isEnemyLaser;
     protected bool isReverseLaser;
 
     void Update()
