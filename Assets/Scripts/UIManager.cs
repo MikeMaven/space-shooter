@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     private bool _gameOver;
+    private bool _waveOver;
     // handle to text
     [SerializeField]
     private Text _scoreText;
@@ -22,6 +23,8 @@ public class UIManager : MonoBehaviour
     private Text _gameOverText;
     [SerializeField]
     private Text _restartText;
+    [SerializeField]
+    private Text _waveText;
     private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
@@ -31,6 +34,7 @@ public class UIManager : MonoBehaviour
         _gameOver = false;
         _restartText.gameObject.SetActive(false);
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _waveText.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -59,8 +63,19 @@ public class UIManager : MonoBehaviour
     {
         _gameOver = true;
         _gameManager.GameOver();
-        _restartText.gameObject.SetActive(true);
         StartCoroutine(GameOverFlickerRoutine());
+    }
+
+    public void OnWaveOver()
+    {
+        _waveOver = true;
+        StartCoroutine(WaveOverFlickerRoutine());
+    }
+
+    public void SetWaveStart()
+    {
+        _waveOver = false;
+        _waveText.gameObject.SetActive(false);
     }
 
     public void SetMaxAmmo(int ammo)
@@ -75,6 +90,17 @@ public class UIManager : MonoBehaviour
             _gameOverText.gameObject.SetActive(true);
             yield return new WaitForSeconds(0.5f);
             _gameOverText.gameObject.SetActive(false);
+            yield return new WaitForSeconds(0.5f);
+        }
+    }
+
+    IEnumerator WaveOverFlickerRoutine()
+    {
+        while(_waveOver)
+        {
+            _waveText.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.5f);
+            _waveText.gameObject.SetActive(false);
             yield return new WaitForSeconds(0.5f);
         }
     }

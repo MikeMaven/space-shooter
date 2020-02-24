@@ -270,7 +270,7 @@ public class Player : MonoBehaviour
 
         if (_lives < 1)
         {
-            _spawnManager.OnPlayerDeath();
+            _spawnManager.OnPlayerDeathOrWin();
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             _uiManager.GameOver();
             Destroy(this.gameObject, 0.2f);

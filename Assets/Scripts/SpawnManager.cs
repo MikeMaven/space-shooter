@@ -38,8 +38,15 @@ public class SpawnManager : MonoBehaviour
     private GameObject _spreadShot;
     [SerializeField]
     private GameObject _boss;
+    [SerializeField]
+    private UIManager _uiManager;
 
     public bool StopSpawning => _stopSpawning;
+
+    void Start()
+    {
+        _uiManager = GameObject.Find("UICanvas").GetComponent<UIManager>();
+    }
 
     public void StartSpawning()
     {
@@ -78,11 +85,13 @@ public class SpawnManager : MonoBehaviour
 
     IEnumerator WaveCooldown()
     {
+        _uiManager.OnWaveOver();
         _stopSpawning = true;
         _wave++;
         _numberOfEnemiesInWave = Mathf.Ceil(_previousWaveEnemies * _waveMultipler);
         yield return new WaitForSeconds(5.0f);
         _stopSpawning = false;
+        _uiManager.SetWaveStart();
         StartSpawning();
     }
 
@@ -121,7 +130,7 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    public void OnPlayerDeath()
+    public void OnPlayerDeathOrWin()
     {
         _stopSpawning = true;
     }

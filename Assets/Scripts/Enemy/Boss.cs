@@ -20,10 +20,14 @@ public class Boss : MonoBehaviour
     private GameObject _laserPrefab;
     [SerializeField]
     private GameObject _explosionPrefab;
+    private SpawnManager _spawnManager;
+    private UIManager _uiManager;
 
     void Start()
     {
         _currentTarget = _movementWaypoints[0];
+        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        _uiManager = GameObject.Find("UIManager").GetComponent<UIManager>();
     }
 
     // Update is called once per frame
@@ -96,6 +100,13 @@ public class Boss : MonoBehaviour
             Instantiate(_explosionPrefab, transform.Find("WingLeft").position, Quaternion.identity);
             GetComponent<BoxCollider2D>().enabled = false;
             Destroy(this.gameObject, 0.4f);
+            OnBossDeath();
         }
+    }
+
+    private void OnBossDeath()
+    {
+        _spawnManager.OnPlayerDeathOrWin();
+        _uiManager.GameOver();
     }
 }
